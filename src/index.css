@@ -1,0 +1,9 @@
+.answer-elements-container {
+  display: flex;
+}
+
+.answer-container {
+  display: flex;
+  margin: 0 5px;
+  cursor: pointer;
+}
