@@ -7,7 +7,7 @@ export default function Answer({ answer, selectAnswer, quizEnded }) {
     }
 
     if (quizEnded) {
-        if (!answer.isCorrect === false) {
+        if (!answer.isCorrect) {
             styles = {backgroundColor: answer.isSelected ? "lightred" : "white"}
         }
 
