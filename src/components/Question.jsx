@@ -2,10 +2,8 @@ import React, { useState, useEffect } from "react"
 import Answer from "./Answer"
 import { decode } from 'html-entities'
 
-export default function Question({ question, selectAnswer, quizEnded }) {
-    const [answers, setAnswers] = useState(() => [])
-
-    question && useEffect(function() {setAnswers(question.answers)},[question])
+ export default function Question({ question, selectAnswer, quizEnded }) {
+    const [answers, setAnswers] = useState(question.answers)
 
     function selectAnswer(id) {
         setAnswers(prevAnswers => prevAnswers.map(answer => {
@@ -17,7 +15,7 @@ export default function Question({ question, selectAnswer, quizEnded }) {
         }))
     }
 
-    console.log("quesiton rendered")
+    //console.log("quesiton rendered")
 
     const answerElements = answers.map(answer => {
         return (
@@ -30,9 +28,12 @@ export default function Question({ question, selectAnswer, quizEnded }) {
         )
     })
 
+    //console.log(question)
+
+
     return (
         <div>
-            <h1>{decode(question.question)}</h1>
+            <h2>{decode(question.question)}</h2>
             <div className="answer-elements-container">
                 {answerElements}
             </div>

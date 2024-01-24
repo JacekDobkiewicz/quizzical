@@ -3,18 +3,24 @@ import Question from "../components/Question"
 import {nanoid} from "nanoid";
 
 export default function Quiz({ quizStarted }) {
-    const [quizData, setQuizData] = useState(()=>[])
-    const [quizEnded, setQuizEnded] = useState(()=> false)
+    const [quizData, setQuizData] = useState([])
+    const [quizEnded, setQuizEnded] = useState(false)
 
     function checkAnswers() {
         setQuizEnded(true)
-        console.log(quizEnded)
+        console.log("quizEnded")
+        console.log(quizData)
     }
 
     console.log("quiz rendered")
 
     useEffect(function() {
-        fetch('https://opentdb.com/api.php?amount=5')
+        const controller = new AbortController();
+        const signal = controller.signal
+
+        console.log("fetch effect ran")
+
+        fetch('https://opentdb.com/api.php?amount=5', {signal})
           .then(res => res.json())
           .then(data => setQuizData(data.results.map(question => {
             let answersArr = []
@@ -23,7 +29,7 @@ export default function Quiz({ quizStarted }) {
                 answersArr.push({answer, isCorrect: false, isSelected: false, id: "answer" + nanoid()})
             })
             //push correct answer object to answers array at random index
-            answersArr.splice((answersArr.length+1) * Math.random() | 0, 0, {answer: question.correct_answer, isCorrect: true, isSelected: false, id: "answer" + nanoid()}) 
+            answersArr.splice((answersArr.length+1) * Math.random() | 0, 0, {answer: question.correct_answer, isCorrect: true, isSelected: false, id: "answer" + nanoid()})
 
             return (
                 {
@@ -34,6 +40,7 @@ export default function Quiz({ quizStarted }) {
                 }
             )
         })))
+        return ()=> controller.abort()
       }, [quizStarted])
 
     quizData && console.log(quizData)

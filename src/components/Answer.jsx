@@ -2,28 +2,41 @@ import React from "react"
 import { decode } from 'html-entities'
 
 export default function Answer({ answer, selectAnswer, quizEnded }) {
+    //console.log("answer rendered")
+
     let styles = {
         backgroundColor:  answer.isSelected ? "#59E391" : "white"
     }
 
     if (quizEnded) {
-        if (!answer.isCorrect) {
-            styles = {backgroundColor: answer.isSelected ? "lightred" : "white"}
+        if (answer.isCorrect && answer.isSelected) {
+            styles = {backgroundColor: "#59E391", color: "blue"}
         }
 
-        if (answer.isCorrect) {
-            styles = {backgroundColor: answer.isSelected ? "#59E391" : "green" }
-        } 
+        if (!answer.isCorrect && answer.isSelected) {
+            styles = {backgroundColor: "red"}
+        }
+
+        if (answer.isCorrect && !answer.isSelected) {
+            styles = {backgroundColor: "green"}
+        }
+
+        if (!answer.isSelected && !answer.isCorrect) {
+            styles = {backgroundColor: "white"}
+        }
     }
 
+
+    quizEnded && console.log(answer.isSelected)
+
     return (
-        <div 
+        <button
             className="answer-container"
             onClick={selectAnswer}
-            disabled={false}
+            disabled={quizEnded ? true : false}
             style={styles}
         >
-            <h3>{decode(answer.answer)}</h3>
-        </div>
+            <h4>{decode(answer.answer)}</h4>
+        </button>
     )
 }
