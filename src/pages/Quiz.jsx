@@ -58,7 +58,9 @@ export default function Quiz({ quizStarted }) {
     return (
         <>
             {quizElements}
-            <button onClick={()=>checkAnswers()}>Check answers</button>
+            <br />
+            <br />
+            <button onClick={()=>checkAnswers()}><h4>Check answers</h4></button>
         </>
     )
 }
